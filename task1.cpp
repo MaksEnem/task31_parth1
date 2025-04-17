@@ -43,14 +43,29 @@ public:
 		}
 	}
 
-	void getToy(const Toy& oth)
+	void getToy(const std::shared_ptr<Toy>& inToy)
 	{
 		if (lovelyToy == nullptr)
+		{			
+			lovelyToy = inToy;					
+		}
+		else if (lovelyToy != nullptr)
 		{
-			std::cout << "nullptr" << std::endl;
-			
+			std::cout << "I already have this toy." << std::endl;
 		}
 	}
+
+
+	void count(std::shared_ptr<Toy> inToy)
+	{
+		std::cout << "in fun(): sp.use_count() == " << inToy.use_count()
+			<< " (object @ " << inToy << ")\n";
+	}
+
+
+
+
+
 
 
 	std::string getName()
@@ -88,14 +103,18 @@ int main()
 	
 
 	std::shared_ptr<Toy> toy = std::make_shared<Toy>("SomeToy");
-	std::cout << toy->getToyName() << std::endl;
-
+	std::cout << "Name of the toy: " << toy->getToyName() << std::endl;
 	
-
+	
 	std::shared_ptr<Dog> dog = std::make_shared<Dog>("Sharik", 10);
+	std::shared_ptr<Dog> dog2 = std::make_shared<Dog>("Sharik", 10);
 	
-	std::cout << dog->getName() << " " << dog->getAge() << std::endl;
-	dog->getToy(*toy);
-
+	//std::cout<< "Dog name and age: " << dog->getName() << " " << dog->getAge() << std::endl;
+	dog->getToy(toy);
+	dog2->getToy(toy);
+	
+	
+	dog->count(toy);
+	dog2->count(toy);
 	return 0;
 }
