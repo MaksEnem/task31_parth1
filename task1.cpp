@@ -16,10 +16,9 @@ public:
 	}
 
 	~Toy() {
-		//std::cout << "Toy " << name << " was dropped " << std::endl;
+		std::cout << "Toy " << name << " was dropped " << std::endl;
 	}
 };
-
 
 class Dog
 {
@@ -29,14 +28,6 @@ private:
 	std::shared_ptr<Toy> lovelyToy;
 	
 public:
-
-	/*Dog(std::string inName, std::shared_ptr<Toy> toy, int inAge) : name(inName), lovelyToy(toy)
-	{
-		age = inAge;
-	}*/
-
-	Dog() {};
-
 	Dog(std::string inName, int inAge) : name(inName)
 	{
 		if (inAge > 0 && inAge < 30)
@@ -63,9 +54,6 @@ public:
 		}		
 	}
 
-
-
-
 	void dropToy()
 	{
 		if (lovelyToy != 0)
@@ -76,102 +64,45 @@ public:
 		else
 		{
 			std::cout << name << ": Nothing to drop." << std::endl;
-		}
-		
+		}		
 	}
-
-
 
 	std::string getToyName()
 	{
 		return lovelyToy->getToyName();
 		
 	}
-
 	
 	std::string getDogName()
 	{
 		return name;
 	}
+
 	int getDogAge()
 	{
 		return age;
 	}
-
 
 	void setName()
 	{
 		std::cout << "Enter dog's name: ";
 		std::cin >> name;
 	}
+
 	void setAge()
 	{
 		std::cout << "Enter dog's age: ";
 		std::cin >> age;
 	}
 
-	~Dog()
-	{
-		
-	}
 };
-
 
 
 int main()
 {
-	/*std::shared_ptr<Toy> toy = std::make_shared<Toy>("SomeToy");	
-
-	std::shared_ptr<Dog> a = std::make_shared<Dog>("Sharik", toy, 10);	
-
-	toy.reset();
-
-	std::cout << "a: " <<  a->getToyName() << std::endl;*/
 	
-
-
-
-
-
-	//std::shared_ptr<Toy> toy = std::make_shared<Toy>("SomeToy");
-	//std::cout << "Name of the toy: " << toy->getToyName() << std::endl;
-	//
-	//
-	//std::shared_ptr<Dog> dog = std::make_shared<Dog>("Sharik", 10);
-	//
-	//
-	////std::cout<< "Dog name and age: " << dog->getName() << " " << dog->getAge() << std::endl;
-	//dog->getToy(toy);	
-	//dog->dropToy();
-	//dog->count(toy);
-	
-
-	
-
-
-
-
-
-	//std::shared_ptr<Toy> toy = std::make_shared<Toy>("SomeToy");
-	////std::cout << toy.use_count() << std::endl;
-
-	//std::shared_ptr<Dog> a = std::make_shared<Dog>("Sharik", 10);
-	//std::shared_ptr<Dog> b = std::make_shared<Dog>("Bobik", 12);
-	//std::shared_ptr<Dog> c = std::make_shared<Dog>("Druzhok", 11);
-
-
-
-	//a->getToy(toy);		
-	//b->getToy(toy);
-	//
-	////b->getToy(toy);
-	//
-	//a->dropToy();
-
-	//b->getToy(toy);
-	
-	
-
+	std::string command;
+	int number;
 	std::shared_ptr<Toy> toy = std::make_shared<Toy>("SomeToy");
 
 	
@@ -180,16 +111,29 @@ int main()
 	dog[1] = new Dog("Bobik", 12);
 	dog[2] = new Dog("Druzhok", 11);
 
-	
-	dog[0]->getToy(toy);
-	dog[1]->getToy(toy);
-	
-	//b->getToy(toy);
-	
-	dog[0]->dropToy();
+	do {
+		std::cout << "Enter \"getToy\" to make dog pick up toy." << std::endl;
+		std::cout << "Enter \"dropToy\" to make dog throw toy" << std::endl;
+		std::cout << "To terminate the program, enter exit." << std::endl;
+		std::cout << "Enter command: ";
+		std::cin >> command;
 
-	dog[1]->getToy(toy);
-
+		if (command == "getToy")
+		{
+			std::cout << "Enter the name of the dog number \"1-3\": " << std::endl;
+			std::cin >> number;
+			--number;
+			dog[number]->getToy(toy);			
+		}
+		else if (command == "dropToy")
+		{
+			std::cout << "Enter the name of the dog number \"1-3\": " << std::endl;
+			std::cin >> number;
+			--number;
+			dog[number]->dropToy();
+		}
+		
+	} while (command != "exit");
 
 	return 0;
 }
